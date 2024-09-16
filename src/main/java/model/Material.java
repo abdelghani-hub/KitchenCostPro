@@ -3,11 +3,23 @@ package main.java.model;
 public class Material extends Component{
     private Double transportCost;
     private Double qualityCoefficient;
+    private Double unitCost;
+    private Double quantity;
 
     public Material(String name, Double unitCost, Double quantity, String componentType, Double TVARate, Double transportCost, Double qualityCoefficient) {
-        super(name, unitCost, quantity, componentType, TVARate);
+        super(name, componentType, TVARate);
+        this.unitCost = unitCost;
+        this.quantity = quantity;
         this.transportCost = transportCost;
         this.qualityCoefficient = qualityCoefficient;
+    }
+
+    public Double getUnitCost() {
+        return unitCost;
+    }
+
+    public Double getQuantity() {
+        return quantity;
     }
 
     public Double getTransportCost() {
