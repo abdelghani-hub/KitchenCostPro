@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import main.resources.config.DBConnection;
@@ -56,15 +57,16 @@ public class GenericDAOImpl<T>  implements  GenericDAO<T> {
     @Override
     public Optional<T> save(T entity) {
         String query = "INSERT INTO " + tableName + " (";
-        Field[] fields = entityClass.getDeclaredFields();
+        Field[] fields = getAllFields(entityClass);
+
         for (Field field : fields) {
             if (!field.getName().equals("id")) {
                 query += StringUtil.camelToSnake(field.getName()) + ", ";
             }
         }
         query = query.substring(0, query.length() - 2) + ") VALUES (";
-        for (int i = 0; i < fields.length; i++) {
-            if (!fields[i].getName().equals("id")) {
+        for (Field field : fields) {
+            if (!field.getName().equals("id")) {
                 query += "?, ";
             }
         }
@@ -125,6 +127,15 @@ public class GenericDAOImpl<T>  implements  GenericDAO<T> {
         return Optional.empty();
     }
 
+    private Field[] getAllFields(Class<?> entityClass) {
+        List<Field> fields = new ArrayList<>();
+        while (entityClass != null) {
+            fields.addAll(Arrays.asList(entityClass.getDeclaredFields()));
+            entityClass = entityClass.getSuperclass();
+        }
+        return fields.toArray(new Field[0]);
+    }
+
     private void setPreparedStatementParameters(PreparedStatement statement, T entity, Field[] fields)
             throws SQLException, IllegalAccessException {
         int index = 1;
@@ -138,15 +149,13 @@ public class GenericDAOImpl<T>  implements  GenericDAO<T> {
 
     private T mapResultSetToEntity(ResultSet resultSet) throws SQLException, IllegalAccessException, InstantiationException {
         try {
-            // Use getDeclaredConstructor() to get the no-argument constructor
             T entity = entityClass.getDeclaredConstructor().newInstance();
 
-            Field[] fields = entityClass.getDeclaredFields();
+            Field[] fields = getAllFields(entityClass);
             for (Field field : fields) {
-                field.setAccessible(true); // Allows access to private fields
+                field.setAccessible(true);
                 Object value = resultSet.getObject(StringUtil.camelToSnake(field.getName()));
 
-                // Only set the field if the value is not null
                 if (value != null) {
                     field.set(entity, value);
                 }
