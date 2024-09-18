@@ -58,7 +58,6 @@ public class MainController {
             project_saved.ifPresentOrElse(
                     p -> {
                         ConsoleUI.printSuccess(p.getName() + " project created successfully.");
-                        generateQuote(p);
                     },
                     () -> ConsoleUI.printError("Project creation failed.")
             );
@@ -108,17 +107,5 @@ public class MainController {
         }
     }
 
-    public void generateQuote(Project project){
-        ConsoleUI.printInfo("Generating Quote ...");
-        Quote quote = new Quote();
-        quote.setProjectID(project.getId());
-        quote.setEstimatedCost(project.getTotalCostWithMargin());
-        quote.setIssueDate(ConsoleUI.readLocalDate("Enter Quote Issue Date dd/mm/YYYY : "));
-        quote.setValidityDate(ConsoleUI.readLocalDate("Enter Quote Issue Date dd/mm/YYYY : "));
-        if (ConsoleUI.readBoolean("Is the quote accepted (y/n) : "))
-            quote.acceptQuote();
-        else
-            quote.rejectQuote();
-        ConsoleUI.printInfo("Quote Generated Successfully.");
-    }
+
 }
