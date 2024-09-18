@@ -1,13 +1,18 @@
 package main.java.model;
 
-public class Material extends Component{
+import utils.ConsoleUI;
+
+public class Material extends Component {
     private Double transportCost;
     private Double qualityCoefficient;
     private Double unitCost;
-    private Double quantity;
+    private Integer quantity;
 
-    public Material(String name, Double unitCost, Double quantity, String componentType, Double TVARate, Double transportCost, Double qualityCoefficient) {
-        super(name, componentType, TVARate);
+    public Material() {
+    }
+
+    public Material(String name, Double unitCost, Integer quantity, String componentType, Double transportCost, Double qualityCoefficient) { //, Double TVARate) {
+        super(name, componentType); //, TVARate);
         this.unitCost = unitCost;
         this.quantity = quantity;
         this.transportCost = transportCost;
@@ -18,7 +23,7 @@ public class Material extends Component{
         return unitCost;
     }
 
-    public Double getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
@@ -30,8 +35,33 @@ public class Material extends Component{
         return qualityCoefficient;
     }
 
+    // Setters
+    public void setUnitCost(Double unitCost) {
+        this.unitCost = unitCost;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setTransportCost(Double transportCost) {
+        this.transportCost = transportCost;
+    }
+
+    public void setQualityCoefficient(Double qualityCoefficient) {
+        this.qualityCoefficient = qualityCoefficient;
+    }
+
+    public String toString() {
+        return "\t\t >> " + getName() + " : " + calculateCost() +"\n" +
+                "\t\t\tQuantity       : " + getQuantity() + " m²\n" +
+                "\t\t\tUnit Cost      : " + getUnitCost() + " €\n" +
+                "\t\t\tQuality        : " + getQualityCoefficient() + "\n" +
+                "\t\t\tTransport Cost : " + getTransportCost() + " €\n";
+    }
+
     @Override
     public Double calculateCost() {
-        return getUnitCost() * getQuantity() * qualityCoefficient * (1 + getTVARate()/100) + transportCost;
+        return (unitCost * quantity * qualityCoefficient) + transportCost;
     }
 }

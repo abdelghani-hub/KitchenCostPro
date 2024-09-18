@@ -3,12 +3,16 @@ package main.java.model;
 abstract class Component {
     private String name;
     private String componentType;
-    private Double TVARate;
+//    private Double TVARate;
+    private Integer projectId;
 
-    public Component(String name, String componentType, Double TVARate) {
+    public Component() {
+    }
+
+    public Component(String name, String componentType) { //, Double TVARate) {
         this.name = name;
         this.componentType = componentType;
-        this.TVARate = TVARate;
+//        this.TVARate = TVARate;
     }
 
     public String getName() {
@@ -19,8 +23,29 @@ abstract class Component {
         return componentType;
     }
 
-    public Double getTVARate() {
-        return TVARate;
+//    public Double getTVARate() {
+//        return TVARate;
+//    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    // Setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setComponentType(String componentType) {
+        this.componentType = componentType;
+    }
+
+//    public void setTVARate(Double TVARate) {
+//        this.TVARate = TVARate;
+//    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 
     abstract Double calculateCost();

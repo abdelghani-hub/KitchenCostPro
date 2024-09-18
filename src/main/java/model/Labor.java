@@ -1,12 +1,15 @@
 package main.java.model;
 
-public class Labor extends Component{
+public class Labor extends Component {
     private Double hoursWorked;
     private Double hourlyRate;
     private Double productivity;
 
-    public Labor(String name, String componentType, Double TVARate, Double hoursWorked, Double hourlyRate, Double productivity) {
-        super(name, componentType, TVARate);
+    public Labor() {
+    }
+
+    public Labor(String name, String componentType, Double hoursWorked, Double hourlyRate, Double productivity) {   //, Double TVARate) {
+        super(name, componentType); //, TVARate);
         this.hoursWorked = hoursWorked;
         this.hourlyRate = hourlyRate;
         this.productivity = productivity;
@@ -24,8 +27,28 @@ public class Labor extends Component{
         return productivity;
     }
 
+    // Setters
+    public void setHoursWorked(Double hoursWorked) {
+        this.hoursWorked = hoursWorked;
+    }
+
+    public void setHourlyRate(Double hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
+    public void setProductivity(Double productivity) {
+        this.productivity = productivity;
+    }
+
+    public String toString() {
+        return "\t\t >> " + getName() + calculateCost() +"\n" +
+                "\t\t\tHours Worked : " + getHoursWorked() + " h\n" +
+                "\t\t\tHourly Rate  : " + getHourlyRate() + " €\n" +
+                "\t\t\tProductivity : " + getProductivity() + "\n";
+    }
+
     @Override
     public Double calculateCost() {
-        return hoursWorked * hourlyRate * productivity * (1 + getTVARate()/100);
+        return hoursWorked * hourlyRate * productivity;
     }
 }
