@@ -12,6 +12,7 @@ public class ConsoleUI {
     public static final String RESET = "\u001B[0m";
     public static final String GREEN = "\u001B[92m";
     public static final String BLUE = "\u001B[34m";
+    public static final String AQUA = "\u001B[36m";
     public static final String RED = "\u001B[31m";
     public static final String ORANGE = "\u001B[38;5;214m";
     public static final Scanner scanner = new Scanner(System.in);
@@ -19,7 +20,7 @@ public class ConsoleUI {
     public static void displayMenu() {
         System.out.print(
                 "\n |=================================|" +
-                        "\n |  " + ORANGE + "Kitchen COST PRO" + RESET + "  |" +
+                        "\n |        " + ORANGE + "Kitchen COST PRO" + RESET + "         |" +
                         "\n |=================================|" +
                         "\n | 1. Create New Project           |" +
                         "\n | 2. Show Existing Projects       |" +
@@ -31,15 +32,27 @@ public class ConsoleUI {
     }
 
     public static void printError(String message) {
-        System.out.println(RED + "\nError: " + message + RESET);
+        System.out.println(RED + "\n" + message + RESET);
     }
 
     public static void printSuccess(String message) {
-        System.out.println(GREEN + "\nSuccess: " + message + RESET);
+        System.out.println(GREEN + "\n" + message + RESET);
     }
 
     public static void printWarning(String message) {
-        System.out.print(ORANGE + "\nWarning: " + message + RESET);
+        System.out.print(ORANGE + "\n" + message + RESET);
+    }
+
+    public static void printInfo(String message) {
+        System.out.println(BLUE + "\n" + message + RESET);
+    }
+
+    public static void printPrimary(String message) {
+        System.out.println(AQUA + "\n" + message + RESET);
+    }
+
+    public static void print(String message) {
+        System.out.print(message);
     }
 
     // Read Local Date
@@ -59,6 +72,16 @@ public class ConsoleUI {
             }
         }
         return date;
+    }
+
+    public static String read(String prompt, Boolean isRequired) {
+        System.out.print(prompt);
+        String input = scanner.nextLine().trim();
+        if (isRequired && input.isEmpty()) {
+            printError("This field is required.");
+            return read(prompt, true);
+        }
+        return input;
     }
 
     // Method for handling the Input Mismatch Exception
@@ -97,26 +120,41 @@ public class ConsoleUI {
         return result;
     }
 
-    public static String readChoice(String prompt, Map<String, String> choices) {
+    public static String readChoice(final String prompt, final Map<String, String> choices) {
+        final String choicesSTR = buildChoicesString(choices, prompt);
+
+        String choice;
+        do {
+            System.out.print(choicesSTR);
+            choice = scanner.nextLine().trim();
+            if (!choices.containsKey(choice)) {
+                printError("Invalid choice! Please try again.");
+            }
+        } while (!choices.containsKey(choice));
+
+        return choice;
+    }
+
+    private static String buildChoicesString(final Map<String, String> choices, final String prompt) {
         StringBuilder choicesSTR = new StringBuilder();
         choicesSTR.append("\t|------------------|\n");
-        choices.forEach((key, value) -> choicesSTR.append("\t ")
-                .append(key)
-                .append(". ")
-                .append(value)
-                .append("\n"));
-        choicesSTR.append("\t|__________________|\n").append(prompt);
-        while (true) {
-            System.out.print(choicesSTR);
-            String choice = scanner.nextLine().trim();
-            if (!choices.containsKey(choice))
-                printError("invalid choice!");
-            else
-                return choice;
-        }
+
+        choices.forEach((key, value) ->
+                choicesSTR.append(String.format("\t %s. %s\n", key, value)));
+
+        choicesSTR.append("\t|__________________|\n")
+                .append(prompt);
+
+        return choicesSTR.toString();
     }
 
     public static String formatDouble(Double value) {
         return NumberFormat.getNumberInstance(Locale.US).format(value);
+    }
+
+    public static Boolean readBoolean(String prompt) {
+        System.out.print(prompt);
+        String input = scanner.nextLine();
+        return input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes");
     }
 }
