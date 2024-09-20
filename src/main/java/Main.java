@@ -7,7 +7,7 @@ public class Main
 {
     private static final MainController controller = new MainController();
     public static void main(String[] args) {
-        System.out.println(ConsoleUI.BLUE + "Welcome to the Cost Estimation System!" + ConsoleUI.RESET);
+        System.out.println(ConsoleUI.AQUA + "Welcome to the Cost Estimation System!" + ConsoleUI.RESET);
         while (true) {
             ConsoleUI.displayMenu();
             String choice = ConsoleUI.scanner.nextLine();

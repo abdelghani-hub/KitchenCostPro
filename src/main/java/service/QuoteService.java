@@ -16,11 +16,11 @@ public class QuoteService {
         this.quoteRepository = new QuoteRepository();
     }
 
-    public Optional<Quote> createNewQuote(Project project) {
+    public Optional<Quote> createNewQuote(Project project, Double finalCost) {
         ConsoleUI.printInfo("Generating Quote ...");
         Quote quote = new Quote();
         quote.setProjectID(project.getId());
-        quote.setEstimatedCost(project.getTotalCostWithMargin());
+        quote.setEstimatedCost(finalCost);
         LocalDate[] dates = ConsoleUI.readPeriod("Enter Quote Issue Date dd/mm/YYYY : ", "Enter Quote Validity Date dd/mm/YYYY : ");
         quote.setIssueDate(dates[0]);
         quote.setValidityDate(dates[1]);

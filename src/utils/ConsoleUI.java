@@ -12,7 +12,7 @@ public class ConsoleUI {
     public static final String RESET = "\u001B[0m";
     public static final String GREEN = "\u001B[92m";
     public static final String BLUE = "\u001B[34m";
-    public static final String AQUA = "\u001B[36m";
+    public static final String AQUA = "\u001B[94m";
     public static final String RED = "\u001B[31m";
     public static final String ORANGE = "\u001B[38;5;214m";
     public static final Scanner scanner = new Scanner(System.in);

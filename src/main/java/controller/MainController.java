@@ -55,20 +55,20 @@ public class MainController {
         }
 
         ConsoleUI.printInfo("\nCalculating Project Total Cost ...");
-        projectService.calculateTotalCost(project, client, materials, labors);
-
+        Double finalCost = projectService.calculateTotalCost(project, client, materials, labors);
         Optional<Project> project_saved = projectService.saveProject(project, materials, labors);
+
         project_saved.ifPresentOrElse(
                 p -> {
                     ConsoleUI.printSuccess(p.getName() + " project created successfully.");
-                    generateQuote(p);
+                    generateQuote(p, finalCost);
                 },
                 () -> ConsoleUI.printError("Project creation failed.")
         );
     }
 
-    public void generateQuote(Project project) {
-        Optional<Quote> quote = quoteService.createNewQuote(project);
+    public void generateQuote(Project project, Double finalCost) {
+        Optional<Quote> quote = quoteService.createNewQuote(project, finalCost);
         if (quote.isPresent()) {
             ConsoleUI.printSuccess("Quote generated successfully.");
             ConsoleUI.print(quote.get().toString());
