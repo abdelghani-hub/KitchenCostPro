@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -78,7 +79,7 @@ public class GenericDAOImpl<T>  implements  GenericDAO<T> {
             }
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 setPreparedStatementParameters(statement, entity, fields);
-                ResultSet resultSet = statement.executeQuery();
+                ResultSet resultSet = statement.executeQuery(); // in case of LocalDate it can't be used TODO
                 if (resultSet.next()) {
                     return Optional.of(mapResultSetToEntity(resultSet));
                 }
@@ -142,7 +143,12 @@ public class GenericDAOImpl<T>  implements  GenericDAO<T> {
         for (Field field : fields) {
             if (!field.getName().equals("id")) {
                 field.setAccessible(true);
-                statement.setObject(index++, field.get(entity));
+                Object value = field.get(entity);
+                if (value instanceof LocalDate) {
+                    statement.setDate(index++, java.sql.Date.valueOf((LocalDate) value));
+                } else {
+                    statement.setObject(index++, value);
+                }
             }
         }
     }
@@ -157,7 +163,11 @@ public class GenericDAOImpl<T>  implements  GenericDAO<T> {
                 Object value = resultSet.getObject(StringUtil.camelToSnake(field.getName()));
 
                 if (value != null) {
-                    field.set(entity, value);
+                    if (field.getType().equals(LocalDate.class)) {
+                        field.set(entity, ((java.sql.Date) value).toLocalDate());
+                    } else {
+                        field.set(entity, value);
+                    }
                 }
             }
             return entity;
