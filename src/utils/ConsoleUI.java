@@ -102,6 +102,7 @@ public class ConsoleUI {
 
         return result;
     }
+
     // Method for handling the Input Mismatch Exception
     public static Double readDouble(String prompt) {
         double result = 0;
@@ -156,5 +157,19 @@ public class ConsoleUI {
         System.out.print(prompt);
         String input = scanner.nextLine();
         return input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes");
+    }
+
+    public static LocalDate[] readPeriod(String startDatePrompt, String endDatePrompt) {
+        LocalDate startDate;
+        LocalDate endDate;
+        while (true) {
+            startDate = readLocalDate(startDatePrompt);
+            endDate = readLocalDate(endDatePrompt);
+
+            if (!startDate.isAfter(endDate)) {
+                return new LocalDate[]{startDate, endDate};
+            }
+            printError("Invalid period. Please try again.");
+        }
     }
 }
