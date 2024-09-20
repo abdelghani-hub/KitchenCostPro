@@ -18,6 +18,7 @@ public class Main
                     break;
                 case "2":
                     System.out.println("--- Show Existing Projects ---");
+                    controller.showExistingProjects();
                     break;
                 case "3":
                     System.out.println("--- Calculate a Project Cost ---");

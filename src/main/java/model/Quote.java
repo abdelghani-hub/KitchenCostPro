@@ -1,5 +1,7 @@
 package main.java.model;
 
+import utils.ConsoleUI;
+
 import java.time.LocalDate;
 
 public class Quote {
@@ -7,12 +9,17 @@ public class Quote {
     private LocalDate issueDate;
     private LocalDate validityDate;
     private Boolean isAccepted;
+    private Integer project_id;
 
-    public Quote(Double estimatedCost, LocalDate issueDate, LocalDate validityDate, Boolean isAccepted) {
+    public Quote() {
+    }
+
+    public Quote(Double estimatedCost, LocalDate issueDate, LocalDate validityDate, Boolean isAccepted, Integer project_id) {
         this.estimatedCost = estimatedCost;
         this.issueDate = issueDate;
         this.validityDate = validityDate;
         this.isAccepted = isAccepted;
+        this.project_id = project_id;
     }
 
     public Double getEstimatedCost() {
@@ -31,8 +38,33 @@ public class Quote {
         return isAccepted;
     }
 
-    public void generateQuote() {
-        // Generate a quote
+    public Integer getProject_id() {
+        return project_id;
+    }
+
+    // Setters
+    public void setEstimatedCost(Double estimatedCost) {
+        this.estimatedCost = estimatedCost;
+    }
+
+    public void setIssueDate(LocalDate issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public void setValidityDate(LocalDate validityDate) {
+        this.validityDate = validityDate;
+    }
+
+    public void setProjectID(Integer project_id) {
+        this.project_id = project_id;
+    }
+
+    public String toString() {
+        return
+                "\n\testimatedCost : " + ConsoleUI.ORANGE + estimatedCost + " €" + ConsoleUI.RESET  +
+                "\n\tissueDate     : " + issueDate +
+                "\n\tvalidityDate  : " + validityDate +
+                "\n\tisAccepted    : " + isAccepted ;
     }
 
     public void acceptQuote() {

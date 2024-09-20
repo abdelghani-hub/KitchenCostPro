@@ -37,4 +37,8 @@ public class ProjectRepository {
     public Optional<Project> findByColumn(String column, String value) {
         return dao.findByColumn(column, value);
     }
+
+    public Optional<Project> findByColumnName(String name, String s) {
+        return dao.findByColumn(name, s);
+    }
 }

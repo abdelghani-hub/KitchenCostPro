@@ -25,7 +25,7 @@ public class ProjectService {
     public Project create(Client client) {
         Project project = new Project();
         project.setClient_id(client.getId());
-        project.setStatus(ProjectStatus.IN_PROGRESS.toString()); // TODO : Change to Enum
+        project.setStatus(ProjectStatus.IN_PROGRESS.toString());
 
         java.lang.String name = ConsoleUI.read("Enter Project Name : ", true);
         Double area = ConsoleUI.readDouble("Enter Project Area (in m²) : ");
@@ -95,5 +95,13 @@ public class ProjectService {
             return savedProject;
         }
         return Optional.empty();
+    }
+
+    public Optional<Project> findByColumn(String name, String s) {
+        return projectRepository.findByColumn(name, s);
+    }
+
+    public List<Project> getAllProjects() {
+        return projectRepository.findAll();
     }
 }

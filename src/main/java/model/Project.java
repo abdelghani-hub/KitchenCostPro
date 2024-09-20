@@ -1,6 +1,6 @@
 package main.java.model;
 
-
+import utils.ConsoleUI;
 
 public class Project {
     private Integer id;
@@ -91,18 +91,17 @@ public class Project {
     }
 
     public Double getTotalCostWithMargin() {
-        return totalCost * (1 + (profitMargin / 100));
+        return totalCost * (1 + profitMargin / 100);
     }
 
     public String toString() {
         return
-                "Name :" + name +
-                "ProfitMargin :" + profitMargin +
-                "TotalCost :" + totalCost +
-                "Status :" + status +
-                "Area :" + area +
-                "TVA :" + TVA +
-                "client_id :" + client_id +
-                "TotalCostWithMargin :" + getTotalCostWithMargin();
+                "\n\tName :" + name +
+                "\n\tProfitMargin :" + profitMargin +
+                "\n\tTotalCost :" + totalCost +
+                "\n\tStatus :" + status +
+                "\n\tArea :" + area +
+                "\n\tTVA :" + TVA +
+                "\n\tTotalCostWithMargin : " + ConsoleUI.ORANGE + getTotalCostWithMargin() + ConsoleUI.RESET + " €\n";
     }
 }

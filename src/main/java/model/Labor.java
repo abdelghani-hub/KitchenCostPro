@@ -41,7 +41,7 @@ public class Labor extends Component {
     }
 
     public String toString() {
-        return "\t\t >> " + getName() + calculateCost() +"\n" +
+        return "\t\t >> " + getName() + " : " +  calculateCost() +" €\n" +
                 "\t\t\tHours Worked : " + getHoursWorked() + " h\n" +
                 "\t\t\tHourly Rate  : " + getHourlyRate() + " €\n" +
                 "\t\t\tProductivity : " + getProductivity() + "\n";
