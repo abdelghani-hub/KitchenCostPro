@@ -1,6 +1,10 @@
 package main.java.model;
 
+<<<<<<< HEAD
 import utils.ConsoleUI;
+=======
+
+>>>>>>> d007fe6efe3f3a54a100baf1bb05fdef0edeaaa0
 
 public class Project {
     private Integer id;
@@ -91,11 +95,16 @@ public class Project {
     }
 
     public Double getTotalCostWithMargin() {
+<<<<<<< HEAD
         return totalCost * (1 + profitMargin / 100);
+=======
+        return totalCost * (1 + (profitMargin / 100));
+>>>>>>> d007fe6efe3f3a54a100baf1bb05fdef0edeaaa0
     }
 
     public String toString() {
         return
+<<<<<<< HEAD
                 "\n\tName :" + name +
                 "\n\tProfitMargin :" + profitMargin +
                 "\n\tTotalCost :" + totalCost +
@@ -103,5 +112,15 @@ public class Project {
                 "\n\tArea :" + area +
                 "\n\tTVA :" + TVA +
                 "\n\tTotalCostWithMargin : " + ConsoleUI.ORANGE + getTotalCostWithMargin() + ConsoleUI.RESET + " €\n";
+=======
+                "Name :" + name +
+                "ProfitMargin :" + profitMargin +
+                "TotalCost :" + totalCost +
+                "Status :" + status +
+                "Area :" + area +
+                "TVA :" + TVA +
+                "client_id :" + client_id +
+                "TotalCostWithMargin :" + getTotalCostWithMargin();
+>>>>>>> d007fe6efe3f3a54a100baf1bb05fdef0edeaaa0
     }
 }

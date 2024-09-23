@@ -27,7 +27,44 @@ public class MainController {
     public void createNewProject() {
         Client client = selectOrCreateClient();
 
+<<<<<<< HEAD
         if (client == null) {
+=======
+        if (client != null) {
+            ConsoleUI.printInfo("Proceeding with the selected client: " + client.getName());
+            // Proceed with project creation
+            Project project = projectService.create(client);
+
+            ConsoleUI.printInfo("\nAdding Materials :");
+            List<Material> materials = materialService.createMaterials();
+
+            ConsoleUI.printInfo("\nAdding Labors :");
+            List<Labor> labors = laborService.createLabors();
+
+            ConsoleUI.printInfo("\nCalculating Project Cost :");
+
+            project.setTVA(0.0);
+            if (ConsoleUI.readBoolean("Do you want to apply a TVA for this project? (y/n) : ")) {
+                project.setTVA(ConsoleUI.readDouble("Enter TVA (%) : "));
+            }
+
+            project.setProfitMargin(0.0);
+            if (ConsoleUI.readBoolean("\nDo you want to apply a profit margin for this project? (y/n) : ")) {
+                project.setProfitMargin(ConsoleUI.readDouble("Enter Profit Margin (%) : "));
+            }
+
+            ConsoleUI.printInfo("\nCalculating Project Total Cost ...");
+            projectService.calculateTotalCost(project, client, materials, labors);
+
+            Optional<Project> project_saved = projectService.saveProject(project, materials, labors);
+            project_saved.ifPresentOrElse(
+                    p -> {
+                        ConsoleUI.printSuccess(p.getName() + " project created successfully.");
+                    },
+                    () -> ConsoleUI.printError("Project creation failed.")
+            );
+        } else {
+>>>>>>> d007fe6efe3f3a54a100baf1bb05fdef0edeaaa0
             ConsoleUI.printError("Client selection/creation failed. Cannot proceed with project creation.");
             return;
         }
@@ -118,6 +155,7 @@ public class MainController {
         }
     }
 
+<<<<<<< HEAD
     public void showExistingProjects() {
         List<Project> projects = projectService.getAllProjects();
         if (projects.isEmpty()) {
@@ -127,4 +165,7 @@ public class MainController {
             projects.forEach(p -> ConsoleUI.print(p.toString()));
         }
     }
+=======
+
+>>>>>>> d007fe6efe3f3a54a100baf1bb05fdef0edeaaa0
 }

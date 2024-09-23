@@ -25,7 +25,11 @@ public class ProjectService {
     public Project create(Client client) {
         Project project = new Project();
         project.setClient_id(client.getId());
+<<<<<<< HEAD
         project.setStatus(ProjectStatus.IN_PROGRESS.toString());
+=======
+        project.setStatus(ProjectStatus.IN_PROGRESS.toString()); // TODO : Change to Enum
+>>>>>>> d007fe6efe3f3a54a100baf1bb05fdef0edeaaa0
 
         java.lang.String name = ConsoleUI.read("Enter Project Name : ", true);
         Double area = ConsoleUI.readDouble("Enter Project Area (in m²) : ");
@@ -96,6 +100,7 @@ public class ProjectService {
         }
         return Optional.empty();
     }
+<<<<<<< HEAD
 
     public Optional<Project> findByColumn(String name, String s) {
         return projectRepository.findByColumn(name, s);
@@ -104,4 +109,6 @@ public class ProjectService {
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
+=======
+>>>>>>> d007fe6efe3f3a54a100baf1bb05fdef0edeaaa0
 }
