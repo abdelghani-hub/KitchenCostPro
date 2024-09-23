@@ -73,7 +73,7 @@ public class ProjectService {
         );
 
         // Labors Details
-        ConsoleUI.printPrimary("\t2) Labors");
+        ConsoleUI.printPrimary("\n\t2) Labors");
         for (Labor labor : labors) {
             ConsoleUI.print(labor.toString());
             laborsCost += labor.calculateCost();
@@ -87,7 +87,7 @@ public class ProjectService {
         // Project Total Cost
         project.setTotalCost(materialsTTC + laborsTTC);
 
-        ConsoleUI.printPrimary("\t3) Total Cost Before Profit Margin : " + project.getTotalCost() + " €");
+        ConsoleUI.printPrimary("\n\t3) Total Cost Before Profit Margin : " + project.getTotalCost() + " €");
         Double profit = project.getTotalCost() * (project.getProfitMargin() / 100);
         Double totalCost = project.getTotalCostWithMargin();
         ConsoleUI.printPrimary("\t4) Profit Margin (" + project.getProfitMargin() + "%)           : " + profit + " €");
@@ -96,7 +96,7 @@ public class ProjectService {
         ConsoleUI.printInfo("******************************");
         ConsoleUI.printInfo(" Total Cost      : " + ConsoleUI.formatDouble(totalCost) + " €");
         ConsoleUI.printInfo(" Client Discount : " + ConsoleUI.formatDouble(discount) + " €");
-        ConsoleUI.printPrimary(" Final Cost      : " + ConsoleUI.formatDouble(finalCost) + " €");
+        ConsoleUI.printPrimary(" Final Cost      : " + ConsoleUI.YELLOW + ConsoleUI.formatDouble(finalCost) + " €");
         ConsoleUI.printInfo("******************************");
         return finalCost;
     }

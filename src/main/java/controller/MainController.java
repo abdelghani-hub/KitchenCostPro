@@ -137,24 +137,25 @@ public class MainController {
             return;
         }
         Project project = optional.get();
+        ConsoleUI.printInfo("Project :");
+        ConsoleUI.print(project.toString());
+
         Optional<Client> optionalClient = clientService.findByColumn("id", project.getClient_id());
         if (optionalClient.isEmpty()) {
             ConsoleUI.printError("Client not found!");
             return;
         }
         Client client = optionalClient.get();
-        List<Material> materials = materialService.findByProject(project);
 
+        List<Material> materials = materialService.findByProject(project);
         List<Labor> labors = laborService.findByProject(project);
+
         projectService.showProjectCostDetails(project, materials, labors, client);
 
         Optional<Quote> optionalQuote = quoteService.findByProject(project);
         if (optionalQuote.isEmpty())
             return;
         Quote quote = optionalQuote.get();
-
-        ConsoleUI.printInfo("Project :");
-        ConsoleUI.print(project.toString());
 
         ConsoleUI.printInfo("Quote details :");
         ConsoleUI.print(quote.toString());

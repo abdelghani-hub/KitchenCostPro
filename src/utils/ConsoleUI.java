@@ -15,19 +15,21 @@ public class ConsoleUI {
     public static final String AQUA = "\u001B[94m";
     public static final String RED = "\u001B[31m";
     public static final String ORANGE = "\u001B[38;5;214m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String YELLOW = "\u001B[33m";
     public static final Scanner scanner = new Scanner(System.in);
 
     public static void displayMenu() {
         System.out.print(
-                "\n |=================================|" +
-                        "\n |        " + ORANGE + "Kitchen COST PRO" + RESET + "         |" +
-                        "\n |=================================|" +
-                        "\n | 1. Create New Project           |" +
-                        "\n | 2. Show Existing Projects       |" +
-                        "\n | 3. Calculate a Project Cost     |" +
-                        "\n |" + BLUE + " 0. Exit" + RESET + "                         |" +
+                PURPLE + "\n |=================================|" +
+                        "\n |        " + "Kitchen COST PRO" + "         |" +
+                        "\n |---------------------------------|" +
+                        PURPLE + "\n |" + RESET + " 1. Create New Project           " + PURPLE + "|" +
+                        PURPLE + "\n |" + RESET + " 2. Show Existing Projects       " + PURPLE + "|" +
+                        PURPLE + "\n |" + RESET + " 3. Calculate a Project Cost     " + PURPLE + "|" +
+                        PURPLE + "\n |" + BLUE + " 0. Exit" + PURPLE + "                         |" +
                         "\n |_________________________________|" +
-                        "\n  Enter your choice : "
+                        "\n  Enter your choice : " + RESET
         );
     }
 
@@ -138,12 +140,12 @@ public class ConsoleUI {
 
     private static String buildChoicesString(final Map<String, String> choices, final String prompt) {
         StringBuilder choicesSTR = new StringBuilder();
-        choicesSTR.append("\t|------------------|\n");
+        choicesSTR.append("\t|------------------------------------|\n");
 
         choices.forEach((key, value) ->
                 choicesSTR.append(String.format("\t %s. %s\n", key, value)));
 
-        choicesSTR.append("\t|__________________|\n")
+        choicesSTR.append("\t|____________________________________|\n")
                 .append(prompt);
 
         return choicesSTR.toString();
