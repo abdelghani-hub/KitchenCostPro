@@ -42,8 +42,7 @@ public class ProjectService {
     }
 
     public Double calculateTotalCost(Project project, Client client, List<Material> materials, List<Labor> labors) {
-        Double materialsCost = 0.0;
-        Double laborsCost = 0.0;
+
         // Project and Client infos
         ConsoleUI.print(
                 "\nProject Name : " + project.getName() +
@@ -52,7 +51,14 @@ public class ProjectService {
                         "\nArea         : " + project.getArea() + " m²"
         );
 
+        Double finalCost = showProjectCostDetails(project, materials, labors, client);
+        return finalCost;
+    }
+
+    public Double showProjectCostDetails(Project project, List<Material> materials, List<Labor> labors, Client client) {
         ConsoleUI.printInfo("\nCost Details :");
+        Double materialsCost = 0.0;
+        Double laborsCost = 0.0;
 
         // Materials Details
         ConsoleUI.printPrimary("\t1) Materials");
@@ -63,7 +69,7 @@ public class ProjectService {
         Double materialsTTC = Double.valueOf(materialsCost * (1 + project.getTVA() / 100));
         ConsoleUI.print(
                 "\n\tTotal Materials Cost HT  : " + materialsCost + " €" +
-                "\n\tTotal Materials Cost TTC : " + ConsoleUI.ORANGE + materialsTTC + " €" + ConsoleUI.RESET
+                        "\n\tTotal Materials Cost TTC : " + ConsoleUI.ORANGE + materialsTTC + " €" + ConsoleUI.RESET
         );
 
         // Labors Details
@@ -75,7 +81,7 @@ public class ProjectService {
         Double laborsTTC = Double.valueOf(laborsCost * (1 + project.getTVA() / 100));
         ConsoleUI.print(
                 "\n\tTotal Labors Cost HT  : " + laborsCost + " €" +
-                "\n\tTotal Labors Cost TTC : " + ConsoleUI.ORANGE + laborsTTC + " €" + ConsoleUI.RESET
+                        "\n\tTotal Labors Cost TTC : " + ConsoleUI.ORANGE + laborsTTC + " €" + ConsoleUI.RESET
         );
 
         // Project Total Cost
@@ -112,7 +118,7 @@ public class ProjectService {
         return Optional.empty();
     }
 
-    public Optional<Project> findByColumn(String name, String s) {
+    public Optional<Project> findByColumn(String name, Object s) {
         return projectRepository.findByColumn(name, s);
     }
 

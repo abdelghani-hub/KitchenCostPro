@@ -33,7 +33,7 @@ public class ClientRepository {
         return dao.delete(entity);
     }
 
-    public Optional<Client> findByColumn(String column, String value) {
+    public Optional<Client> findByColumn(String column, Object value) {
         return dao.findByColumn(column, value);
     }
 }

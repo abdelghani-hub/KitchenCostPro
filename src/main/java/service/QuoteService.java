@@ -32,4 +32,12 @@ public class QuoteService {
             return quoteRepository.save(quote);
         return Optional.empty();
     }
+
+    public Optional<Quote> findByProject(Project project) {
+        return quoteRepository.findByColumn("project_id", project.getId());
+    }
+
+    public Optional<Quote> update(Quote quote) {
+        return quoteRepository.update(quote);
+    }
 }

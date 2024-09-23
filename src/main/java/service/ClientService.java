@@ -4,6 +4,7 @@ import main.java.model.Client;
 import main.java.repository.ClientRepository;
 import utils.ConsoleUI;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ClientService {
@@ -38,5 +39,9 @@ public class ClientService {
             return savedClient;
         }
         return Optional.empty();
+    }
+
+    public Optional<Client> findByColumn(String column, Object value) {
+        return clientRepository.findByColumn(column, value);
     }
 }

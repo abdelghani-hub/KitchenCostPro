@@ -2,7 +2,9 @@ package main.java.repository;
 
 import main.java.dao.GenericDAOImpl;
 import main.java.model.Labor;
+import main.java.model.Material;
 
+import java.util.List;
 import java.util.Optional;
 
 public class LaborRepository {
@@ -15,5 +17,9 @@ public class LaborRepository {
 
     public Optional<Labor> save(Labor labor) {
         return dao.save(labor);
+    }
+
+    public List<Labor> findAllByColumn(String projectId, Object value) {
+        return dao.findAllByColumn(projectId, value);
     }
 }

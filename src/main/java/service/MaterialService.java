@@ -1,6 +1,7 @@
 package main.java.service;
 
 import main.java.model.Material;
+import main.java.model.Project;
 import main.java.repository.MaterialRepository;
 import utils.ConsoleUI;
 
@@ -36,5 +37,9 @@ public class MaterialService {
             addMore = ConsoleUI.readBoolean("Do you want to add more materials? (y/n) : ");
         }
         return materials;
+    }
+
+    public List<Material> findByProject(Project project) {
+        return materialRepository.findAllByColumn("project_id", project.getId());
     }
 }

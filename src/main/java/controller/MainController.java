@@ -4,6 +4,7 @@ import main.java.model.*;
 import main.java.service.*;
 import utils.ConsoleUI;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,5 +127,50 @@ public class MainController {
             ConsoleUI.printInfo("Existing Projects : ");
             projects.forEach(p -> ConsoleUI.print(p.toString()));
         }
+    }
+
+    public void showProject() {
+        String name = ConsoleUI.read("Enter Project Name : ", true);
+        Optional<Project> optional = projectService.findByColumn("name", name);
+        if (optional.isEmpty()) {
+            ConsoleUI.printError("Project not found!");
+            return;
+        }
+        Project project = optional.get();
+        Optional<Client> optionalClient = clientService.findByColumn("id", project.getClient_id());
+        if (optionalClient.isEmpty()) {
+            ConsoleUI.printError("Client not found!");
+            return;
+        }
+        Client client = optionalClient.get();
+        List<Material> materials = materialService.findByProject(project);
+
+        List<Labor> labors = laborService.findByProject(project);
+        projectService.showProjectCostDetails(project, materials, labors, client);
+
+        Optional<Quote> optionalQuote = quoteService.findByProject(project);
+        if (optionalQuote.isEmpty())
+            return;
+        Quote quote = optionalQuote.get();
+
+        ConsoleUI.printInfo("Project :");
+        ConsoleUI.print(project.toString());
+
+        ConsoleUI.printInfo("Quote details :");
+        ConsoleUI.print(quote.toString());
+
+        if (!quote.getIsAccepted()) {
+            Boolean accepted = ConsoleUI.readBoolean(ConsoleUI.AQUA + "\nDo you want to accept the quote (y/n): " + ConsoleUI.RESET);
+            if (accepted && quote.getValidityDate().isBefore(LocalDate.now())) {
+                ConsoleUI.printWarning("The validity date is passed !");
+            } else if (accepted) {
+                quote.acceptQuote();
+                if (quoteService.update(quote).isPresent())
+                    ConsoleUI.printSuccess("Quote accepted successfully !");
+                else
+                    ConsoleUI.printError("Quote acceptance failed !");
+            }
+        } else
+            ConsoleUI.printInfo("The quote is already accepted !");
     }
 }

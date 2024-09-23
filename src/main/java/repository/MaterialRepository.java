@@ -3,6 +3,8 @@ package main.java.repository;
 import main.java.dao.GenericDAO;
 import main.java.dao.GenericDAOImpl;
 import main.java.model.Material;
+
+import java.util.List;
 import java.util.Optional;
 
 public class MaterialRepository {
@@ -14,5 +16,9 @@ public class MaterialRepository {
 
     public Optional<Material> save(Material material) {
         return dao.save(material);
+    }
+
+    public List<Material> findAllByColumn(String projectId, Object value) {
+        return dao.findAllByColumn(projectId, value);
     }
 }

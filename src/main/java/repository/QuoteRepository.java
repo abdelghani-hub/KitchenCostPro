@@ -34,7 +34,7 @@ public class QuoteRepository {
         return dao.delete(entity);
     }
 
-    public Optional<Quote> findByColumn(String column, String value) {
+    public Optional<Quote> findByColumn(String column, Object value) {
         return dao.findByColumn(column, value);
     }
 }

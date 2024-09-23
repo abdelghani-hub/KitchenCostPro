@@ -96,12 +96,13 @@ public class Project {
 
     public String toString() {
         return
+                "\n\t------------------" +
                 "\n\tName :" + name +
                 "\n\tProfitMargin :" + profitMargin +
                 "\n\tTotalCost :" + totalCost +
                 "\n\tStatus :" + status +
                 "\n\tArea :" + area +
                 "\n\tTVA :" + TVA +
-                "\n\tTotalCostWithMargin : " + ConsoleUI.ORANGE + getTotalCostWithMargin() + ConsoleUI.RESET + " €\n";
+                "\n\tTotalCostWithMargin : " + ConsoleUI.ORANGE + ConsoleUI.formatDouble(getTotalCostWithMargin()) + ConsoleUI.RESET + " €\n";
     }
 }

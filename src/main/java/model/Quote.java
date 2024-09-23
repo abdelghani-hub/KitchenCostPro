@@ -5,6 +5,7 @@ import utils.ConsoleUI;
 import java.time.LocalDate;
 
 public class Quote {
+    private Integer id;
     private Double estimatedCost;
     private LocalDate issueDate;
     private LocalDate validityDate;
@@ -14,7 +15,8 @@ public class Quote {
     public Quote() {
     }
 
-    public Quote(Double estimatedCost, LocalDate issueDate, LocalDate validityDate, Boolean isAccepted, Integer project_id) {
+    public Quote(Integer id, Double estimatedCost, LocalDate issueDate, LocalDate validityDate, Boolean isAccepted, Integer project_id) {
+        this.id = id;
         this.estimatedCost = estimatedCost;
         this.issueDate = issueDate;
         this.validityDate = validityDate;
@@ -61,10 +63,10 @@ public class Quote {
 
     public String toString() {
         return
-                "\n\testimatedCost : " + ConsoleUI.ORANGE + estimatedCost + " €" + ConsoleUI.RESET  +
+                "\n\testimatedCost : " + ConsoleUI.ORANGE + ConsoleUI.formatDouble(estimatedCost) + " €" + ConsoleUI.RESET  +
                 "\n\tissueDate     : " + issueDate +
                 "\n\tvalidityDate  : " + validityDate +
-                "\n\tisAccepted    : " + isAccepted ;
+                "\n\tisAccepted    : " + isAccepted + "\n";
     }
 
     public void acceptQuote() {
@@ -73,5 +75,9 @@ public class Quote {
 
     public void rejectQuote() {
         this.isAccepted = false;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }

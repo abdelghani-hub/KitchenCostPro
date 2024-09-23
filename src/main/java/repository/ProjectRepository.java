@@ -34,11 +34,7 @@ public class ProjectRepository {
         return dao.delete(entity);
     }
 
-    public Optional<Project> findByColumn(String column, String value) {
+    public Optional<Project> findByColumn(String column, Object value) {
         return dao.findByColumn(column, value);
-    }
-
-    public Optional<Project> findByColumnName(String name, String s) {
-        return dao.findByColumn(name, s);
     }
 }
