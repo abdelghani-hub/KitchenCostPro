@@ -1,5 +1,7 @@
 package main.java.model;
 
+import utils.ConsoleUI;
+
 public class Labor extends Component {
     private Double hoursWorked;
     private Double hourlyRate;
@@ -41,11 +43,7 @@ public class Labor extends Component {
     }
 
     public String toString() {
-<<<<<<< HEAD
-        return "\t\t >> " + getName() + " : " +  calculateCost() +" €\n" +
-=======
-        return "\t\t >>" + getName() + "\n" +
->>>>>>> d007fe6efe3f3a54a100baf1bb05fdef0edeaaa0
+        return "\t\t >> " + ConsoleUI.BLUE + getName() + " : " +  calculateCost() +" €\n" + ConsoleUI.RESET +
                 "\t\t\tHours Worked : " + getHoursWorked() + " h\n" +
                 "\t\t\tHourly Rate  : " + getHourlyRate() + " €\n" +
                 "\t\t\tProductivity : " + getProductivity() + "\n";

@@ -6,6 +6,7 @@ public class Client {
     private String address;
     private String phone;
     private Boolean isProfessional;
+    private Double discountRate;
 
     public Client() {}
     public Client(String name, String address, String phone, Boolean isProfessional) {
@@ -39,10 +40,19 @@ public class Client {
     @Override
     public String toString() {
         return
-                "\n\tid             : " + id +
-                "\n\tname           : " + name +
-                "\n\taddress        : " + address +
-                "\n\tphone          : " + phone +
-                "\n\tisProfessional : " + isProfessional + "\n";
+                "\n\tId            : " + id +
+                "\n\tName          : " + name +
+                "\n\tAddress       : " + address +
+                "\n\tPhone         : " + phone +
+                "\n\tProfessional  : " + isProfessional +
+                "\n\tDiscount Rate : " + discountRate +"\n";
+    }
+
+    public Double getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(Double discountRate) {
+        this.discountRate = discountRate;
     }
 }

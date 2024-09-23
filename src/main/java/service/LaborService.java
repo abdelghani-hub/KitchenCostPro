@@ -1,6 +1,7 @@
 package main.java.service;
 
 import main.java.model.Labor;
+import main.java.model.Project;
 import main.java.repository.LaborRepository;
 import utils.ConsoleUI;
 
@@ -35,5 +36,9 @@ public class LaborService {
             addMore = ConsoleUI.readBoolean("Do you want to add more labors? (y/n) : ");
         }
         return labors;
+    }
+
+    public List<Labor> findByProject(Project project) {
+        return laborRepository.findAllByColumn("project_id", project.getId());
     }
 }

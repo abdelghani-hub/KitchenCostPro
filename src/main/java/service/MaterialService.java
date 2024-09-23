@@ -1,6 +1,7 @@
 package main.java.service;
 
 import main.java.model.Material;
+import main.java.model.Project;
 import main.java.repository.MaterialRepository;
 import utils.ConsoleUI;
 
@@ -29,12 +30,15 @@ public class MaterialService {
             material.setUnitCost(ConsoleUI.readDouble("\tEnter Unit Cost (€/m²) : "));
             material.setTransportCost(ConsoleUI.readDouble("\tEnter Transport Cost (€) : "));
             material.setQualityCoefficient(ConsoleUI.readDouble("\tEnter Quality ( 1:STD | > 1.0 : high) : "));
-//            material.setTVARate(ConsoleUI.readDouble("\tEnter TVA Rate (%) : "));
             material.setComponentType("material");
             materials.add(material);
             ConsoleUI.printSuccess("Material Added Successfully.");
             addMore = ConsoleUI.readBoolean("Do you want to add more materials? (y/n) : ");
         }
         return materials;
+    }
+
+    public List<Material> findByProject(Project project) {
+        return materialRepository.findAllByColumn("project_id", project.getId());
     }
 }

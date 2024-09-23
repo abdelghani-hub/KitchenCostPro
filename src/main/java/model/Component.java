@@ -23,10 +23,6 @@ abstract class Component {
         return componentType;
     }
 
-//    public Double getTVARate() {
-//        return TVARate;
-//    }
-
     public Integer getProjectId() {
         return projectId;
     }
@@ -39,10 +35,6 @@ abstract class Component {
     public void setComponentType(String componentType) {
         this.componentType = componentType;
     }
-
-//    public void setTVARate(Double TVARate) {
-//        this.TVARate = TVARate;
-//    }
 
     public void setProjectId(Integer projectId) {
         this.projectId = projectId;

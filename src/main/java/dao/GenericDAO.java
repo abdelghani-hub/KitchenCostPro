@@ -9,5 +9,6 @@ public interface GenericDAO<T> {
     Optional<T> save(T entity);
     Optional<T> update(T entity);
     Optional<T> delete(T entity);
-    Optional<T> findByColumn(String column, String value);
+    Optional<T> findByColumn(String column, Object value);
+    List<T> findAllByColumn(String projectId, Object value);
 }

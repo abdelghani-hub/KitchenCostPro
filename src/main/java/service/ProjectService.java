@@ -25,13 +25,15 @@ public class ProjectService {
     public Project create(Client client) {
         Project project = new Project();
         project.setClient_id(client.getId());
-<<<<<<< HEAD
         project.setStatus(ProjectStatus.IN_PROGRESS.toString());
-=======
-        project.setStatus(ProjectStatus.IN_PROGRESS.toString()); // TODO : Change to Enum
->>>>>>> d007fe6efe3f3a54a100baf1bb05fdef0edeaaa0
 
-        java.lang.String name = ConsoleUI.read("Enter Project Name : ", true);
+        String name;
+        while (true){
+            name = ConsoleUI.read("Enter Project Name : ", true);
+            if(projectRepository.findByColumn("name", name).isEmpty())
+                break;
+            ConsoleUI.printError("A project with this name is already exists!");
+        }
         Double area = ConsoleUI.readDouble("Enter Project Area (in m²) : ");
         project.setName(name);
         project.setArea(area);
@@ -39,9 +41,8 @@ public class ProjectService {
         return project;
     }
 
-    public void calculateTotalCost(Project project, Client client, List<Material> materials, List<Labor> labors) {
-        Double materialsCost = 0.0;
-        Double laborsCost = 0.0;
+    public Double calculateTotalCost(Project project, Client client, List<Material> materials, List<Labor> labors) {
+
         // Project and Client infos
         ConsoleUI.print(
                 "\nProject Name : " + project.getName() +
@@ -50,7 +51,13 @@ public class ProjectService {
                         "\nArea         : " + project.getArea() + " m²"
         );
 
+        return showProjectCostDetails(project, materials, labors, client);
+    }
+
+    public Double showProjectCostDetails(Project project, List<Material> materials, List<Labor> labors, Client client) {
         ConsoleUI.printInfo("\nCost Details :");
+        Double materialsCost = 0.0;
+        Double laborsCost = 0.0;
 
         // Materials Details
         ConsoleUI.printPrimary("\t1) Materials");
@@ -58,30 +65,39 @@ public class ProjectService {
             ConsoleUI.print(material.toString());
             materialsCost += material.calculateCost();
         }
+        Double materialsTTC = (materialsCost * (1 + project.getTVA() / 100));
         ConsoleUI.print(
                 "\n\tTotal Materials Cost HT  : " + materialsCost + " €" +
-                        "\n\tTotal Materials Cost TTC : " + ConsoleUI.ORANGE + materialsCost * (1 + project.getTVA() / 100) + " €" + ConsoleUI.RESET
+                        "\n\tTotal Materials Cost TTC : " + ConsoleUI.ORANGE + materialsTTC + " €" + ConsoleUI.RESET
         );
 
         // Labors Details
-        ConsoleUI.printPrimary("\t2) Labors");
+        ConsoleUI.printPrimary("\n\t2) Labors");
         for (Labor labor : labors) {
             ConsoleUI.print(labor.toString());
             laborsCost += labor.calculateCost();
         }
+        Double laborsTTC = (laborsCost * (1 + project.getTVA() / 100));
         ConsoleUI.print(
                 "\n\tTotal Labors Cost HT  : " + laborsCost + " €" +
-                        "\n\tTotal Labors Cost TTC : " + ConsoleUI.ORANGE + laborsCost * (1 + project.getTVA() / 100) + " €" + ConsoleUI.RESET
+                        "\n\tTotal Labors Cost TTC : " + ConsoleUI.ORANGE + laborsTTC + " €" + ConsoleUI.RESET
         );
-        project.setTotalCost(materialsCost * (1 + project.getTVA() / 100) + laborsCost * (1 + project.getTVA() / 100));
+
         // Project Total Cost
-        ConsoleUI.printPrimary("\t3) Total Cost Before Profit Margin : " + project.getTotalCost() + " €");
-        double profit = project.getTotalCost() * (project.getProfitMargin() / 100);
-        Double projectFinalCost = project.getTotalCostWithMargin();
+        project.setTotalCost(materialsTTC + laborsTTC);
+
+        ConsoleUI.printPrimary("\n\t3) Total Cost Before Profit Margin : " + project.getTotalCost() + " €");
+        Double profit = project.getTotalCost() * (project.getProfitMargin() / 100);
+        Double totalCost = project.getTotalCostWithMargin();
         ConsoleUI.printPrimary("\t4) Profit Margin (" + project.getProfitMargin() + "%)           : " + profit + " €");
-        ConsoleUI.printPrimary("***************************");
-        ConsoleUI.printPrimary(" Final Cost : " + projectFinalCost + " €");
-        ConsoleUI.printPrimary("***************************");
+        Double discount = client.getIsProfessional() ? (totalCost * client.getDiscountRate()/100) : 0.0;
+        Double finalCost = totalCost - discount;
+        ConsoleUI.printInfo("******************************");
+        ConsoleUI.printInfo(" Total Cost      : " + ConsoleUI.formatDouble(totalCost) + " €");
+        ConsoleUI.printInfo(" Client Discount : " + ConsoleUI.formatDouble(discount) + " €");
+        ConsoleUI.printPrimary(" Final Cost      : " + ConsoleUI.YELLOW + ConsoleUI.formatDouble(finalCost) + " €");
+        ConsoleUI.printInfo("******************************");
+        return finalCost;
     }
 
     public Optional<Project> saveProject(Project project, List<Material> materials, List<Labor> labors) {
@@ -100,15 +116,12 @@ public class ProjectService {
         }
         return Optional.empty();
     }
-<<<<<<< HEAD
 
-    public Optional<Project> findByColumn(String name, String s) {
+    public Optional<Project> findByColumn(String name, Object s) {
         return projectRepository.findByColumn(name, s);
     }
 
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
-=======
->>>>>>> d007fe6efe3f3a54a100baf1bb05fdef0edeaaa0
 }

@@ -53,11 +53,7 @@ public class Material extends Component {
     }
 
     public String toString() {
-<<<<<<< HEAD
-        return "\t\t >> " + getName() + " : " + calculateCost() +"\n" +
-=======
-        return "\t\t >>" + getName() + " : " + calculateCost() +"\n" +
->>>>>>> d007fe6efe3f3a54a100baf1bb05fdef0edeaaa0
+        return "\n\t\t >> " + ConsoleUI.BLUE + getName() + " : " + calculateCost() +" €\n" + ConsoleUI.RESET +
                 "\t\t\tQuantity       : " + getQuantity() + " m²\n" +
                 "\t\t\tUnit Cost      : " + getUnitCost() + " €\n" +
                 "\t\t\tQuality        : " + getQualityCoefficient() + "\n" +
